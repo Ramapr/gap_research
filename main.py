@@ -26,6 +26,8 @@ SourceFileLoader("netlib", "/home/panda/nets.py").load_module()
 from netlib import *
 from netlib import f1_m
 from tensorflow import convert_to_tensor
+from keras.backend.tensorflow_backend import set_session
+import tensorflow as tf
 
 # PARAMS
 #%%
@@ -72,6 +74,13 @@ y_train, y_test = tr_y, ts_y
 print(X_train.shape, y_train.shape)
 print(X_test.shape, y_test.shape)
 #%%
+
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
+config.log_device_placement = True  # to log device placement (on which device the operation ran)
+sess = tf.Session(config=config)
+set_session(sess)
+
 for nm, dl in dir_.items():
   # create folder
   if not exists(join(_path, nm)):
@@ -127,7 +136,6 @@ for nm, dl in dir_.items():
 #      #sys.stdout.flush()
 #      f1m = K.get_value(f1_m(y_test, y_pred))
 #      #sys.stdout.flush()
-#            
 #      print("sc - {0}\ncu - {1}\ncum - {2}".format(scf1, cf1, f1m))
 #      sys.stdout.flush()
       scf1 = f1_score(y_test, y_pred, average='weighted')
