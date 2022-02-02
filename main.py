@@ -16,18 +16,16 @@ from keras.models import load_model
 import keras.backend as K
 from sklearn.metrics import f1_score, confusion_matrix, precision_score
 from sklearn.metrics import roc_auc_score, average_precision_score, recall_score
-
-from importlib.machinery import SourceFileLoader
-SourceFileLoader("vgg16_utils", "/data/NFP/Dev/Model/Additional/vgg16_utils.py").load_module()
-from vgg16_utils import f1
-SourceFileLoader("keras_utils_omilos", "/data/NFP/Dev/Model/Additional/keras_utils_omilos_cut.py").load_module()
-import keras_utils_omilos
-SourceFileLoader("netlib", "/home/panda/nets.py").load_module()
-from netlib import *
-from netlib import f1_m
 from tensorflow import convert_to_tensor
 from keras.backend.tensorflow_backend import set_session
 import tensorflow as tf
+
+from importlib.machinery import SourceFileLoader
+SourceFileLoader("utils", "/home/panda/utils.py").load_module()
+from utils import get_callback_list
+SourceFileLoader("netlib", "/home/panda/nets.py").load_module()
+from netlib import *
+from netlib import f1_m
 
 # PARAMS
 #%%
